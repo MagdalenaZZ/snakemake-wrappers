@@ -1,9 +1,10 @@
-name: "cnvkit target"
-url: https://cnvkit.readthedocs.io/en/stable/pipeline.html#target
+name: "paraphase"
+url: https://github.com/PacificBiosciences/paraphase
 description: >
- iRun paraphase and organise and merge the outputfiles.
+ Run paraphase, organise and merge the outputfiles.
 input:
   - bam: bam file
+  - fasta: genome fasta file (with .fai index)
   - annotate: gene list, as a “flat” format for which genes to analyse
 output:
   - vcf:  vcf file
