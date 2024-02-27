@@ -1,0 +1,13 @@
+name: "cnvkit target"
+url: https://cnvkit.readthedocs.io/en/stable/pipeline.html#target
+description: >
+ iRun paraphase and organise and merge the outputfiles.
+input:
+  - bam: bam file
+  - annotate: gene list, as a “flat” format for which genes to analyse
+output:
+  - vcf:  vcf file
+params:
+  - extra: additional parameters that will be forwarded to paraphasse target
+authors:
+  - Patrik Smeds
