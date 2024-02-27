@@ -13,15 +13,17 @@ extra = snakemake.params.get("extra", "")
 #if annotate:
 #    annotate = f"--annotate {annotate}"
 
-shell(
-    """
-    (TMPDIR={tmp_dir}; \
-    head  \
-    {snakemake.input.bam} \
-    >  {snakemake.output.vcf} \
-    ) {log}
-    """
-)
+shell """" echo Hello World! """
+
+
+#shell(
+#    """
+#    head  \
+#    {snakemake.input.bam} \
+#    >  {snakemake.output.vcf} \
+#    ) {log}
+#    """
+#)
 
 
 
