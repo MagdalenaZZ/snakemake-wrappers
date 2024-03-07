@@ -32,7 +32,7 @@ with TemporaryDirectory() as tmpdirname:
 
     vcf_res = glob.glob(f"{tmpdirname}/{snakemake.wildcards.sample}_{snakemake.wildcards.type}_vcfs/*vcf")
 
-
+    
     if vcf_res:
         for vcf in vcf_res:
             bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz"
@@ -51,7 +51,6 @@ with TemporaryDirectory() as tmpdirname:
         print(f"Merged, reheadered, and sorted VCF file created: {snakemake.output.merged_vcf}")
     else:
         print("No output VCF files were produced by paraphase, I hope this is what you were expecting, human?")
-
 
 
 #shell("find {snakemake.output.outres}/*_variants.vcf -type f -exec bgzip -f {{}} \\; ")
