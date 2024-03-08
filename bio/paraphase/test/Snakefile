@@ -1,12 +1,20 @@
-rule cnvkit_targetl:
+
+rule paraphase:
     input:
-        bed="test.bed",
-        annotate="refflat-mini.txt",
+        bam="reads/HG00733_smn1_realigned.bam",
+        fasta="smn1_ref.fa",
+        vcf_header="vcf_chromosome_header.vcf",
     output:
-        bed="test.target.bed",
-    log:
-        "logs/test.target.log",
+        merged_vcf = "paraphase/Sample1_paraphase.vcf.gz",
     params:
-        extra = "--split" # optional
+        genome="--genome 38",
+        extra="-g smn1",
+        outfolder=directory("long_read/paraphase/"),
+    log:
+        "long_read/paraphase/HG00733_smn1_realigned.vcf.log",
+    threads: 1
+    message:
+        "{rule}: Calls paraphase on {input.bam} with paraphase to resolve SNVs in gene families"
     wrapper:
-        "master/bio/cnvkit/target"
+        "ppp/bio/paraphase"
+
