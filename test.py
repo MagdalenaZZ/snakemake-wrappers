@@ -7,6 +7,7 @@ import sys
 import yaml
 from itertools import chain
 
+
 DIFF_MASTER = os.environ.get("DIFF_MASTER", "false") == "true"
 DIFF_LAST_COMMIT = os.environ.get("DIFF_LAST_COMMIT", "false") == "true"
 
