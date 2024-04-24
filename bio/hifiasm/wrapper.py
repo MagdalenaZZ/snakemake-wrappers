@@ -24,7 +24,7 @@ if hic2:
     hic2 = "--h2 {}".format(hic2)
 
 
-out_prefix = os.path.commonprefix(snakemake.output).rstrip(".")
+out_prefix = os.path.basename(snakemake.output).replace('.a_ctg.gfa', '') 
 
 
 shell(

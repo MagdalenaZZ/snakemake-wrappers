@@ -1,20 +1,25 @@
 
 rule paraphase:
     input:
-        bam="reads/HG00733_smn1_realigned.bam",
-        fasta="smn1_ref.fa",
-        vcf_header="vcf_chromosome_header.vcf",
+        bam="test_data/HG00733_smn1_realigned.bam",
+        fasta="test_data/homo_sapiens2.fa",
+        #fasta="test_data/homo_sapiens.fa",      
+        #fasta="test_data/smn1_ref.fa",       
+        vcf_header="test_data/vcf_chromosome_header.vcf",
     output:
         merged_vcf = "paraphase/Sample1_paraphase.vcf.gz",
     params:
         genome="--genome 38",
         extra="-g smn1",
-        outfolder=directory("long_read/paraphase/"),
+        outfolder=directory("paraphase/"),
     log:
-        "long_read/paraphase/HG00733_smn1_realigned.vcf.log",
+        "paraphase/HG00733_smn1_realigned.vcf.log",
     threads: 1
+    resources:
+        mem_mb=1024,
     message:
         "{rule}: Calls paraphase on {input.bam} with paraphase to resolve SNVs in gene families"
     wrapper:
+        #file
         "ppp/bio/paraphase"
 
