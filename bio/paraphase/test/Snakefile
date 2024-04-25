@@ -2,8 +2,8 @@
 rule paraphase:
     input:
         bam="test_data/HG00733_smn1_realigned.bam",
-        fasta="test_data/homo_sapiens2.fa",
-        #fasta="test_data/homo_sapiens.fa",      
+        #fasta="test_data/homo_sapiens2.fa",
+        fasta="test_data/homo_sapiens.fa",      
         #fasta="test_data/smn1_ref.fa",       
         vcf_header="test_data/vcf_chromosome_header.vcf",
     output:
