@@ -29,8 +29,9 @@ try:
 
     # Concatenating, reheadering, and sorting the zipped and indexed VCF files
     bam_res = glob.glob(f"{tmpdirname}/*realigned.paraphase.ba*")
+    print ("BAM RES: ", bam_res)
     shell("""
-    cp -pr bam_res {snakemake.output.bam}
+        cp -pr {bam_res} {snakemake.output.bam}  {log}
     """)
     vcf_res = glob.glob(f"{tmpdirname}/*_vcfs/*vcf")
     if vcf_res:
