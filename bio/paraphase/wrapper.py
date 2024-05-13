@@ -12,7 +12,7 @@ log = snakemake.log_fmt_shell(stdout=False, stderr=True)
 extra = snakemake.params.get("extra", "")
 
 #with TemporaryDirectory(delete=not args.keep_temp_files) as tmpdirname:
-with TemporaryDirectory(delete=FALSE) as tmpdirname:
+with TemporaryDirectory(delete=False) as tmpdirname:
 # with TemporaryDirectory() as tmpdirname:
     try:
         shell(
