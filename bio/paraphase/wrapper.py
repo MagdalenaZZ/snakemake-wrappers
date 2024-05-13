@@ -14,6 +14,7 @@ extra = snakemake.params.get("extra", "")
 
 # Using mkdtemp() to create a temporary directory that is not automatically deleted
 tmpdirname = mkdtemp()
+print("TMPDIR:",tmpdirname)
 
 try:
     shell(
