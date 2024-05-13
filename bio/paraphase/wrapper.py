@@ -28,7 +28,7 @@ try:
     )
 
     # Concatenating, reheadering, and sorting the zipped and indexed VCF files
-    bam_res = glob.glob(f"{tmpdirname}/*realigned.paraphase.bam")
+    bam_res = glob.glob(f"{tmpdirname}/*realigned.paraphase.ba*")
     shell("""
     cp -pr bam_res {snakemake.output.bam}
     """)
