@@ -1,4 +1,9 @@
 
+# Set the custom wrapper prefix for the entire workflow
+snakemake.workflow.wrapper_prefix = "https://github.com/mmagdalenazz/snakemake-wrappers/raw/"
+
+
+
 rule paraphase:
     input:
         bam="test_data/HG00733_smn1_realigned.bam",
