@@ -29,7 +29,8 @@ try:
     )
 
     # Concatenating, reheadering, and sorting the zipped and indexed VCF files
-    vcf_res = glob.glob(f"/{tmpdirname}/**/*variants.vcf", recursive=True)
+    #vcf_res = glob.glob(f"/{tmpdirname}/**/*variants.vcf", recursive=True)
+    vcf_res = glob.glob(f"{tmpdirname}/*_vcfs/*vcf")
     print("RES: ", vcf_res )
     if vcf_res:
         for vcf in vcf_res:
