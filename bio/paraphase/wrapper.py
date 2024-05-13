@@ -14,7 +14,7 @@ extra = snakemake.params.get("extra", "")
 
 # Using mkdtemp() to create a temporary directory that is not automatically deleted
 tmpdirname = mkdtemp()
-print("TMPDIR:",tmpdirname)
+print("TMPDIR: ",tmpdirname)
 
 try:
     shell(
@@ -29,8 +29,8 @@ try:
     )
 
     # Concatenating, reheadering, and sorting the zipped and indexed VCF files
-    vcf_res = glob.glob(f"{tmpdirname}/**/*variants.vcf", recursive=True)
-
+    vcf_res = glob.glob(f"/{tmpdirname}/**/*variants.vcf", recursive=True)
+    print("RES: ", vcf_res )
     if vcf_res:
         for vcf in vcf_res:
             bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz"
