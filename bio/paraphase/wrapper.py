@@ -7,13 +7,15 @@ import glob
 import sys
 from snakemake.shell import shell
 from tempfile import TemporaryDirectory
+from tempfile import mkdtemp
 
 log = snakemake.log_fmt_shell(stdout=False, stderr=True)
 extra = snakemake.params.get("extra", "")
 
 #with TemporaryDirectory(delete=not args.keep_temp_files) as tmpdirname:
-with TemporaryDirectory(delete=False) as tmpdirname:
+#with TemporaryDirectory(delete=False) as tmpdirname:
 # with TemporaryDirectory() as tmpdirname:
+tmpdirname = mkdtemp() 
     try:
         shell(
             """
