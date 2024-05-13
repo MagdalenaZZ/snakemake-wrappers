@@ -28,11 +28,6 @@ try:
     )
 
     # Concatenating, reheadering, and sorting the zipped and indexed VCF files
-    bam_res = glob.glob(f"{tmpdirname}/*realigned.paraphase.ba*")
-    print ("BAM RES: ", bam_res)
-    shell("""
-        cp -pr {bam_res} {snakemake.output.bam}  {log}
-    """)
     vcf_res = glob.glob(f"{tmpdirname}/*_vcfs/*vcf")
     if vcf_res:
         for vcf in vcf_res:
@@ -49,6 +44,12 @@ try:
             f"bcftools sort -Oz -o {snakemake.output.merged_vcf} {log}"
         )
         print(f"Merged, reheadered, and sorted VCF file created: {snakemake.output.merged_vcf}")
+        # Copy out bam and bai files
+        bam_res = glob.glob(f"{tmpdirname}/*realigned.paraphase.ba*")
+        print ("BAM RES: ", bam_res)
+        shell("""
+            cp -pr {bam_res} {snakemake.output.bam} {log}
+        """)
     else:
         print("No output VCF files were produced by paraphase, I hope this is what you were expecting, human?")
         shell(f"touch {snakemake.output.merged_vcf}")
