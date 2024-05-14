@@ -9,7 +9,7 @@ rule paraphase:
         #fasta="test_data/smn1_ref.fa",       
         #vcf_header="test_data/vcf_chromosome_header.vcf",
         fasta="test_data/chr5.fa",
-        faidx="test_data/chr5.fa.fai",
+        faidx="test_data/homo_sapiens2.fa.fai",
     output:
         bam = "paraphase/HG00733_smn1_realigned.paraphase.bam",
         bai = "paraphase/HG00733_smn1_realigned.paraphase.bam.bai",
