@@ -50,8 +50,8 @@ try:
         bai_res = glob.glob(f"{tmpdirname}/*.bai")
         print ("BAM RES: ", bam_res, bai_res)
         shell("""
-            cp -pr {bam_res} {snakemake.output.bam}/ >> {log};
-            cp -pr {bai_res} {snakemake.output.bam}/ >> {log}
+            cp -pr {bam_res} {snakemake.output.bam} {log};
+            cp -pr {bai_res} {snakemake.output.bam} {log}
         """,
             bam_files=" ".join(bam_res),
             bai_files=" ".join(bai_res)
