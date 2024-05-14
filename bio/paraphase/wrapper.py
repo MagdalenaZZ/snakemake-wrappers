@@ -29,6 +29,7 @@ try:
 
     # Concatenating, reheadering, and sorting the zipped and indexed VCF files
     vcf_res = glob.glob(f"{tmpdirname}/*_vcfs/*vcf")
+    print("VCFRES: ", vcf_res)
     if vcf_res:
         for vcf in vcf_res:
             bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz"
@@ -45,11 +46,12 @@ try:
         )
         print(f"Merged, reheadered, and sorted VCF file created: {snakemake.output.merged_vcf}")
         # Copy out bam and bai files
-        bam_res = glob.glob(f"{tmpdirname}/*realigned.paraphase.ba*")
-        print ("BAM RES: ", bam_res)
+        bam_res = glob.glob(f"{tmpdirname}/*.bam")
+        bai_res = glob.glob(f"{tmpdirname}/*.bai")
+        print ("BAM RES: ", bam_res, bai_res)
         shell(
-            f"mkdir {snakemake.output.bam} | "
-            f"cp -pr {bam_res} {snakemake.output.bam} {log}"
+            f"cp -pr {bam_res} {snakemake.output.bam} >> {log}"
+            f"cp -pr {bai_res} {snakemake.output.bam} >> {log}"
         )
     else:
         print("No output VCF files were produced by paraphase, I hope this is what you were expecting, human?")
