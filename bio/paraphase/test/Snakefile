@@ -12,7 +12,7 @@ rule paraphase:
         #fasta="test_data/smn1_ref.fa",       
         vcf_header="test_data/vcf_chromosome_header.vcf",
     output:
-        bam = "paraphase/",
+        bam = directory("paraphase/"),
         merged_vcf = "paraphase/Sample1_paraphase.vcf.gz",
     params:
         genome="--genome 38",

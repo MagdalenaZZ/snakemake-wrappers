@@ -50,11 +50,12 @@ try:
         bai_res = glob.glob(f"{tmpdirname}/*.bai")
         print ("BAM RES: ", bam_res, bai_res)
         shell("""
-            cp -pr {bam_res} {snakemake.output.bam} {log};
-            cp -pr {bai_res} {snakemake.output.bam} {log}
+            cp -pr {bam_files} {output_dir} {log};
+            cp -pr {bai_files} {output_dir} {log}
         """,
             bam_files=" ".join(bam_res),
-            bai_files=" ".join(bai_res)
+            bai_files=" ".join(bai_res),
+            output_dir=snakemake.output.bam
         )
     else:
         print("No output VCF files were produced by paraphase, I hope this is what you were expecting, human?")
