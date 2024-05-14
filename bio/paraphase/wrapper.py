@@ -21,11 +21,21 @@ try:
         )
 
         # Create a new VCF header
-        fai_file=open('{snakemake.input.faidx}', 'r')
-        lines = fai_file.readlines()
-        fai_file.close()
-        output = open('{snakemake.output.vcf_header}', 'w')
-        [output.write(f'##contig=<ID={{line.split()[0]}},length={{line.split()[1]}}>\\n') for line in lines]
+
+        # Get the paths from Snakemake input and output objects
+        input_faidx = snakemake.input.faidx
+        output_vcf_header = snakemake.output.vcf_header
+
+        # Open the .fai index file and read lines
+        with open(input_faidx, 'r') as fai_file:
+            lines = fai_file.readlines()
+            fai_file.close()
+
+        # Open the output file and write formatted header lines
+        with open(output_vcf_header, 'w') as output:
+        for line in lines:
+            contig_id, length = line.split()[:2]  # Assuming the first two elements are ID and length
+            output.write(f"##contig=<ID={contig_id},length={length}>\n")
         output.close()
 
         # Concatenating, reheadering, and sorting the zipped and indexed VCF files
