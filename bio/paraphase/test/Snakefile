@@ -14,7 +14,7 @@ rule paraphase:
         bam = "paraphase/HG00733_smn1_realigned.paraphase.bam",
         bai = "paraphase/HG00733_smn1_realigned.paraphase.bam.bai",
         merged_vcf = "paraphase/Sample1_paraphase.vcf.gz",
-        vcf_header = "paraphase/vcf_chromosome_header.vcf"
+        vcf_header = "paraphase/vcf_chromosome_header.vcf",
     params:
         genome="--genome 38",
         extra="-r test_data/chr5.fa -g smn1",

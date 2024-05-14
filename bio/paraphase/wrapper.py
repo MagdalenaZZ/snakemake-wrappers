@@ -28,12 +28,12 @@ try:
     )
 
     # Create a new VCF header
-    shell( 
+    shell: 
         """
-        python -c "[sys.stdout.write(f'##contig=<ID={line.split()[0]},length={line.split()[1]}>\n') for line in open('{snakemake.input.faidx}')]"
+        python -c "import sys;[sys.stdout.write(f'##contig=<ID={line.split()[0]},length={line.split()[1]}>\n') for line in open('{snakemake.input.faidx}')]"
         > {snakemake.output.vcf_header}
         """
-    )
+
 
     # Concatenating, reheadering, and sorting the zipped and indexed VCF files
     vcf_res = glob.glob(f"{tmpdirname}/*_vcfs/*vcf")
