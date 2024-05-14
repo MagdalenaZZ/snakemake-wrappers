@@ -22,9 +22,9 @@ try:
 
         # Create a new VCF header
         shell(
-            f"""
-            python -c "import sys; fai_file=open('{snakemake.input.faidx}', 'r'); lines = fai_file.readlines(); fai_file.close(); output = open('{snakemake.output.vcf_header}', 'w'); [output.write(f'##contig=<ID={{line.split()[0]}},length={{line.split()[1]}}>\\n') for line in lines]; output.close()"
             """
+            python -c "import sys; fai_file=open('{snakemake.input.faidx}', 'r'); lines = fai_file.readlines(); fai_file.close(); output = open('{snakemake.output.vcf_header}', 'w'); [output.write(f'##contig=<ID={{line.split()[0]}},length={{line.split()[1]}}>\\n') for line in lines]; output.close()"
+            """ 
         )
 
         # Concatenating, reheadering, and sorting the zipped and indexed VCF files
