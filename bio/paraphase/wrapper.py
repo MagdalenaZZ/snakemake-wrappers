@@ -27,6 +27,14 @@ try:
         tmpdirname=tmpdirname  # Pass tmpdirname to the shell environment
     )
 
+    # Create a new VCF header
+    shell( 
+        """
+        python -c "[sys.stdout.write(f'##contig=<ID={line.split()[0]},length={line.split()[1]}>\n') for line in open('{snakemake.input.faidx}')]"
+        > {snakemake.output.vcf_header}
+        """
+    )
+
     # Concatenating, reheadering, and sorting the zipped and indexed VCF files
     vcf_res = glob.glob(f"{tmpdirname}/*_vcfs/*vcf")
     print("VCFRES: ", vcf_res)
@@ -36,12 +44,12 @@ try:
             shell(bgzip_cmd)
             index_cmd = f"bcftools index {vcf}.gz"
             shell(index_cmd)
-            print(f"Compressed and indexed: {vcf}.gz")
-        
+            print(f"Compressed and indexed: {vcf}.gz") 
+
         params_variant_files = " ".join([f"{vcf}.gz" for vcf in vcf_res])
         shell(
             f"bcftools concat -a -Oz {params_variant_files} | "
-            f"bcftools annotate --header-lines {snakemake.input.vcf_header} | "
+            f"bcftools annotate --header-lines {snakemake.output.vcf_header} | "
             f"bcftools sort -Oz -o {snakemake.output.merged_vcf}"
         )
         print(f"Merged, reheadered, and sorted VCF file created: {snakemake.output.merged_vcf}")
@@ -50,12 +58,11 @@ try:
         bai_res = glob.glob(f"{tmpdirname}/*.bai")
         print ("BAM RES: ", bam_res, bai_res)
         shell("""
-            cp -pr {bam_files} {output_dir};
-            cp -pr {bai_files} {output_dir}
+            cp -pr {bam_files} {snakemake.output.bam};
+            cp -pr {bai_files} {snakemake.output.bai}
         """,
             bam_files=" ".join(bam_res),
             bai_files=" ".join(bai_res),
-            output_dir=snakemake.output.bam
         )
     else:
         print("No output VCF files were produced by paraphase, I hope this is what you were expecting, human?")
