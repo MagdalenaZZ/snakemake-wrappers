@@ -29,13 +29,13 @@ try:
         # Open the .fai index file and read lines
         with open(input_faidx, 'r') as fai_file:
             lines = fai_file.readlines()
-            fai_file.close()
+        fai_file.close()
 
         # Open the output file and write formatted header lines
         with open(output_vcf_header, 'w') as output:
-        for line in lines:
-            contig_id, length = line.split()[:2]  # Assuming the first two elements are ID and length
-            output.write(f"##contig=<ID={contig_id},length={length}>\n")
+            for line in lines:
+                contig_id, length = line.split()[:2]  # Assuming the first two elements are ID and length
+                output.write(f"##contig=<ID={contig_id},length={length}>\n")
         output.close()
 
         # Concatenating, reheadering, and sorting the zipped and indexed VCF files
@@ -73,5 +73,6 @@ try:
 except Exception as e:
     print(f"Error running paraphase: {e}")
     sys.exit(1)
+
 
 
