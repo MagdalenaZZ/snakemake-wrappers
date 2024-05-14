@@ -21,15 +21,16 @@ try:
         )
 
         # Create a new VCF header
-        shell(
-            """
-            python -c "import sys; fai_file=open('{snakemake.input.faidx}', 'r'); lines = fai_file.readlines(); fai_file.close(); output = open('{snakemake.output.vcf_header}', 'w'); [output.write(f'##contig=<ID={{line.split()[0]}},length={{line.split()[1]}}>\\n') for line in lines]; output.close()"
-            """ 
-        )
+        fai_file=open('{snakemake.input.faidx}', 'r')
+        lines = fai_file.readlines()
+        fai_file.close()
+        output = open('{snakemake.output.vcf_header}', 'w')
+        [output.write(f'##contig=<ID={{line.split()[0]}},length={{line.split()[1]}}>\\n') for line in lines]
+        output.close()
 
         # Concatenating, reheadering, and sorting the zipped and indexed VCF files
         vcf_res = glob.glob(f"{tmpdirname}/*_vcfs/*vcf")
-        print("VCFRES: ", vcf_res)
+        #print("VCFRES: ", vcf_res)
         if vcf_res:
             for vcf in vcf_res:
                 bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz"
@@ -48,7 +49,7 @@ try:
             # Copy out bam and bai files
             bam_res = glob.glob(f"{tmpdirname}/*.bam")
             bai_res = glob.glob(f"{tmpdirname}/*.bai")
-            print("BAM RES: ", bam_res, bai_res)
+            #print("BAM RES: ", bam_res, bai_res)
             shell(
                 f"""
                 cp -pr {' '.join(bam_res)} {snakemake.output.bam};
@@ -56,7 +57,7 @@ try:
                 """
             )
         else:
-            print("No output VCF files were produced by paraphase, I hope this is what you were expecting, human?")
+            print("No output VCF or BAM files were produced by paraphase, I hope this is what you were expecting, human?")
             shell(f"touch {snakemake.output.merged_vcf}")
 
 except Exception as e:
