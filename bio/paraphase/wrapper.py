@@ -9,7 +9,7 @@ from snakemake.shell import shell
 from tempfile import mkdtemp
 import shutil
 
-log = snakemake.log_fmt_shell(stdout=False, stderr=True)
+log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 extra = snakemake.params.get("extra", "")
 
 # Using mkdtemp() to create a temporary directory that is not automatically deleted
@@ -32,9 +32,9 @@ try:
     print("VCFRES: ", vcf_res)
     if vcf_res:
         for vcf in vcf_res:
-            bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz"
+            bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz >> {log} 2>> {log}"
             shell(bgzip_cmd)
-            index_cmd = f"bcftools index {vcf}.gz"
+            index_cmd = f"bcftools index {vcf}.gz >> {log} 2>> {log}"
             shell(index_cmd)
             print(f"Compressed and indexed: {vcf}.gz")
         
@@ -42,7 +42,7 @@ try:
         shell(
             f"bcftools concat -a -Oz {params_variant_files} | "
             f"bcftools annotate --header-lines {snakemake.input.vcf_header} | "
-            f"bcftools sort -Oz -o {snakemake.output.merged_vcf} {log}"
+            f"bcftools sort -Oz -o {snakemake.output.merged_vcf} >> {log} 2>> {log}"
         )
         print(f"Merged, reheadered, and sorted VCF file created: {snakemake.output.merged_vcf}")
         # Copy out bam and bai files
@@ -50,8 +50,8 @@ try:
         bai_res = glob.glob(f"{tmpdirname}/*.bai")
         print ("BAM RES: ", bam_res, bai_res)
         shell("""
-            cp -pr {bam_files} {output_dir} {log};
-            cp -pr {bai_files} {output_dir} {log}
+            cp -pr {bam_files} {output_dir} >> {log} 2>> {log};
+            cp -pr {bai_files} {output_dir} >> {log} 2>> {log}
         """,
             bam_files=" ".join(bam_res),
             bai_files=" ".join(bai_res),
