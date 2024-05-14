@@ -32,9 +32,9 @@ try:
     print("VCFRES: ", vcf_res)
     if vcf_res:
         for vcf in vcf_res:
-            bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz >> {log} 2>&1"
+            bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz"
             shell(bgzip_cmd)
-            index_cmd = f"bcftools index {vcf}.gz >> {log} 2>&1"
+            index_cmd = f"bcftools index {vcf}.gz"
             shell(index_cmd)
             print(f"Compressed and indexed: {vcf}.gz")
         
@@ -42,7 +42,7 @@ try:
         shell(
             f"bcftools concat -a -Oz {params_variant_files} | "
             f"bcftools annotate --header-lines {snakemake.input.vcf_header} | "
-            f"bcftools sort -Oz -o {snakemake.output.merged_vcf} >> {log} 2>&1"
+            f"bcftools sort -Oz -o {snakemake.output.merged_vcf}"
         )
         print(f"Merged, reheadered, and sorted VCF file created: {snakemake.output.merged_vcf}")
         # Copy out bam and bai files
@@ -50,8 +50,8 @@ try:
         bai_res = glob.glob(f"{tmpdirname}/*.bai")
         print ("BAM RES: ", bam_res, bai_res)
         shell("""
-            cp -pr {bam_files} {output_dir} >> {log} 2>&1;
-            cp -pr {bai_files} {output_dir} >> {log} 2>&1
+            cp -pr {bam_files} {output_dir};
+            cp -pr {bai_files} {output_dir}
         """,
             bam_files=" ".join(bam_res),
             bai_files=" ".join(bai_res),
