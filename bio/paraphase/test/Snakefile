@@ -4,7 +4,8 @@ snakemake.workflow.wrapper_prefix = "https://github.com/mmagdalenazz/snakemake-w
 
 rule paraphase:
     input:
-        bam="test_data/HG00733_smn1_realigned.bam",
+        bam="test_data/PDPK1.bam",
+        #bam="test_data/HG00733_smn1_realigned.bam",
         #fasta="test_data/homo_sapiens2.fa",
         #fasta="test_data/smn1_ref.fa",       
         #vcf_header="test_data/vcf_chromosome_header.vcf",
