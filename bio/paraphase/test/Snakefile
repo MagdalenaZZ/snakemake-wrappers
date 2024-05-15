@@ -8,7 +8,7 @@ rule paraphase:
         #fasta="test_data/homo_sapiens2.fa",
         #fasta="test_data/smn1_ref.fa",       
         #vcf_header="test_data/vcf_chromosome_header.vcf",
-        fasta="test_data/chr5.fa",
+        fasta="test_data/chr16s.fa",
         faidx="test_data/homo_sapiens2.fa.fai",
     output:
         bam = "paraphase/HG00733_smn1_realigned.paraphase.bam",
@@ -17,7 +17,8 @@ rule paraphase:
         vcf_header = "paraphase/vcf_chromosome_header.vcf",
     params:
         genome="--genome 38",
-        extra="-r test_data/chr5.fa -g smn1",
+        #extra="-g smn1",
+        extra="-g PDPK1",
         outfolder=directory("paraphase/"),
     log:
         "paraphase/HG00733_smn1_realigned.vcf.log",
