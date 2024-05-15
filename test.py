@@ -6326,3 +6326,19 @@ def test_sortmerna_se():
             "-F",
         ],
     )
+
+@skip_if_not_modified
+def test_paraphase():
+    run(
+        "bio/paraphase",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "paraphase/Sample1_paraphase.vcf.gz",
+            "--use-conda",
+            "-F",
+        ],
+    )
+
+

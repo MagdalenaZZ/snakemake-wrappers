@@ -9,6 +9,8 @@ extra = snakemake.params.get("extra", "")
 
 try:
     with TemporaryDirectory() as tmpdirname:
+        
+        ### Run paraphase
         shell(
             f"""
             (paraphase --bam {snakemake.input.bam} \
@@ -24,7 +26,7 @@ try:
             """
         )
 
-        # Create a new VCF header
+        ### Create a new VCF header
 
         # Get the paths from Snakemake input and output objects
         input_faidx = snakemake.input.faidx
@@ -42,9 +44,8 @@ try:
                 output.write(f"##contig=<ID={contig_id},length={length}>\n")
         output.close()
 
-        # Concatenating, reheadering, and sorting the zipped and indexed VCF files
+        ### Concatenating, reheadering, and sorting the zipped and indexed VCF files, and copy the remapped reads
         vcf_res = glob.glob(f"{tmpdirname}/*_vcfs/*vcf")
-        #print("VCFRES: ", vcf_res)
         if vcf_res:
             for vcf in vcf_res:
                 bgzip_cmd = f"bgzip -c {vcf} > {vcf}.gz"
@@ -60,6 +61,7 @@ try:
                 f"bcftools sort -Oz -o {snakemake.output.merged_vcf}"
             )
             print(f"Merged, reheadered, and sorted VCF file created: {snakemake.output.merged_vcf}")
+            
             # Copy out bam and bai files
             bam_res = glob.glob(f"{tmpdirname}/*.bam")
             bai_res = glob.glob(f"{tmpdirname}/*.bai")
@@ -77,6 +79,9 @@ try:
 except Exception as e:
     print(f"Error running paraphase: {e}")
     sys.exit(1)
+
+
+""" Slut """
 
 
 
