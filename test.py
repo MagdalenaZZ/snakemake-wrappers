@@ -6335,7 +6335,7 @@ def test_paraphase():
             "snakemake",
             "--cores",
             "1",
-            "paraphase/Sample1_paraphase.vcf.gz",
+            "Sample1_paraphase.vcf.gz",
             "--use-conda",
             "-F",
         ],
